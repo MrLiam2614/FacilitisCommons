@@ -1,0 +1,6 @@
+name: FacilitisCommons
+version: '${project.version}'
+main: me.mrliam2614.facilitiscommonds.FacilitisCommons
+api-version: 1.18
+authors: [ mrliam2614, ChocoDev ]
+description: Commons API, replacing old FacilitisAPI
