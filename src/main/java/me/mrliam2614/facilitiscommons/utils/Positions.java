@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import me.mrliam2614.facilitiscommons.FacilitisCommons;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.World;
 
 import java.util.UUID;
@@ -17,6 +18,15 @@ public class Positions {
     private double z;
     private float pitch;
     private float yaw;
+
+    public Positions(Location loc){
+        this.worldID = loc.getWorld().getUID();
+        this.x = loc.getX();
+        this.y = loc.getY();
+        this.z = loc.getZ();
+        this.pitch = loc.getPitch();
+        this.yaw = loc.getYaw();
+    }
 
     public Positions(UUID worldID, double x, double y, double z) {
         this(worldID, x, y, z, 0, 0);
@@ -49,5 +59,9 @@ public class Positions {
 
     public void setWorld(World world) {
         worldID = world.getUID();
+    }
+
+    public Location getLocation(){
+        return new Location(Bukkit.getWorld(worldID), x, y, z, pitch, yaw);
     }
 }
