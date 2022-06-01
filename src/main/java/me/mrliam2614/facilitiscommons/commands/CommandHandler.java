@@ -46,10 +46,15 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
 
         Command cmd = commandList.stream().filter(c -> c.getName().equalsIgnoreCase(commandName)).findAny().orElse(null);
 
+        calcCommand(player, cmd, args);
+        return true;
+    }
+
+    public void calcCommand(Player player, Command cmd, String[] args){
         if (cmd != null) {
             if (cmd.getPermission() != null && !player.hasPermission(cmd.getPermission())) {
                 //TODO: Handle no permissions
-                return true;
+                return;
             }
             String[] arguments = new String[args.length - 1];
 
@@ -58,12 +63,11 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
             Command nextArg = cmd.getArgs().stream().filter(arg -> arg.getName().equalsIgnoreCase(arguments[0])).findAny().orElse(null);
 
             if (nextArg != null) {
-                nextArg.execute(player, arguments);
+                calcCommand(player, nextArg, arguments);
             } else {
                 cmd.execute(player, arguments);
             }
         }
-        return true;
     }
 
     @Override
