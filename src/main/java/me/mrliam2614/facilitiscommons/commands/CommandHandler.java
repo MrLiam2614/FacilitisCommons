@@ -98,7 +98,7 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
         }
 
         Command lastArg = cmd, prevArg = cmd;
-        for (int x = 0; x < args.length; x++) {
+        for (int x = 0; x < args.length-1; x++) {
             int finalX = x;
             prevArg = lastArg;
             if(lastArg == null || lastArg.getArgs() == null){
