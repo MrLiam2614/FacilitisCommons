@@ -58,6 +58,8 @@ public abstract class Command {
     }
 
     public List<Command> getArgs(){
+        if(args == null)
+            args = new ArrayList<>();
         return args;
     }
 }

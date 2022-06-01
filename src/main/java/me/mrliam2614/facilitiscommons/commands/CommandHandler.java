@@ -101,7 +101,7 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
         for (int x = 0; x < args.length; x++) {
             int finalX = x;
             prevArg = lastArg;
-            if(lastArg.getArgs() == null){
+            if(lastArg == null || lastArg.getArgs() == null){
                 return nextArgs;
             }
             lastArg = lastArg.getArgs().stream().filter(arg -> arg.getName().equalsIgnoreCase((args[finalX]))).findAny().orElse(null);
