@@ -84,7 +84,7 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
 
         if (args.length == 1) {
             List<Command> allCommands = commandList.stream().filter(c -> c.getName().contains(commandName)).collect(Collectors.toList());
-            for(Command cmda : allCommands){
+            for (Command cmda : allCommands) {
                 nextArgs.add(cmda.getName());
             }
             return nextArgs;
@@ -93,9 +93,15 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
         String[] arguments = new String[args.length - 1];
         System.arraycopy(args, 1, arguments, 0, args.length - 1);
 
-        String lastArgS = arguments[arguments.length - 1];
-
-        Command lastArg = cmd.getArgs().stream().filter(arg -> arg.getName().equalsIgnoreCase(lastArgS)).findAny().orElse(null);
+        if (cmd == null) {
+            return nextArgs;
+        }
+        Command lastArg = cmd, prevArg = cmd;
+        for(int x = 0; x< arguments.length; x++){
+            int finalX = x;
+            prevArg = lastArg;
+            lastArg = lastArg.getArgs().stream().filter(arg -> arg.getName().equalsIgnoreCase((arguments[finalX]))).findAny().orElse(null);
+        }
 
         if (lastArg != null) {
             if (lastArg.getPermission() != null && !player.hasPermission(lastArg.getPermission())) {
@@ -109,5 +115,13 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
             }
         }
         return nextArgs;
+    }
+
+    public boolean validateArg(String argName, Command cmd) {
+        Command rem = cmd.getArgs().stream().filter(c -> c.getName().equalsIgnoreCase(argName)).findAny().orElse(null);
+        if (rem == null) {
+            return false;
+        }
+        return true;
     }
 }
