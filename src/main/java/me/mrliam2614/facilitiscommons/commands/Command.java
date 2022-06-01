@@ -2,13 +2,18 @@ package me.mrliam2614.facilitiscommons.commands;
 
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public abstract class Command {
     private String name;
     private String description;
     private String permission;
+    private List<Command> args;
 
     protected Command() {
         loadProps();
+        args = new ArrayList<>();
     }
 
     private void loadProps() {
@@ -36,5 +41,13 @@ public abstract class Command {
 
     public String getPermission() {
         return permission;
+    }
+
+    public void addArg(Command cmd){
+        args.add(cmd);
+    }
+
+    public List<Command> getArgs(){
+        return args;
     }
 }
