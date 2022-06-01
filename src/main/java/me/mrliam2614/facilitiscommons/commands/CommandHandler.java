@@ -1,6 +1,7 @@
 package me.mrliam2614.facilitiscommons.commands;
 
 import lombok.Getter;
+import me.mrliam2614.facilitiscommons.utils.Messages;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -53,10 +54,10 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
             }
             String[] arguments = new String[args.length-1];
 
-
             System.arraycopy(args, 1, arguments, 0, args.length - 1);
 
             for(Command arg : cmd.getArgs()){
+                player.sendMessage("Found: " + arg.getName());
                 if(arg.getName().equalsIgnoreCase(commandName)){
                     arg.execute(player, arguments);
                     return true;
@@ -72,13 +73,13 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull org.bukkit.command.Command command, @NotNull String label, @NotNull String[] args) {
         List<String> nextArgs = new ArrayList<>();
         if(!(sender instanceof Player)) {
-            return null;
+            return nextArgs;
         }
 
         Player player = (Player) sender;
 
         if(args.length < 1) {
-            return null;
+            return nextArgs;
         }
 
         String commandName = args[args.length - 1];
@@ -88,12 +89,12 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
         if(cmd != null) {
             if(cmd.getPermission() != null && !player.hasPermission(cmd.getPermission())) {
                 //TODO: Handle no permissions
-                return null;
+                return nextArgs;
             }
             for(Command arg : cmd.getArgs()){
                 nextArgs.add(arg.getName());
             }
         }
-        return null;
+        return nextArgs;
     }
 }
