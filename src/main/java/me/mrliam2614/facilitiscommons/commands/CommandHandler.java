@@ -84,7 +84,9 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
         String[] arguments = new String[args.length - 1];
         System.arraycopy(args, 1, arguments, 0, args.length - 1);
 
-        Command lastArg = cmd.getArgs().stream().filter(arg -> arg.getName().equalsIgnoreCase(arguments[arguments.length-2])).findAny().orElse(null);
+        String lastArgS = arguments[arguments.length-1];
+
+        Command lastArg = cmd.getArgs().stream().filter(arg -> arg.getName().equalsIgnoreCase(lastArgS)).findAny().orElse(null);
 
         if (lastArg != null) {
             if (lastArg.getPermission() != null && !player.hasPermission(lastArg.getPermission())) {
