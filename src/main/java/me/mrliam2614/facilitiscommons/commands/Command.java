@@ -44,6 +44,7 @@ public abstract class Command {
     }
 
     public void addArg(Command cmd){
+        System.out.println("Arg added");
         args.add(cmd);
     }
 
