@@ -13,7 +13,6 @@ public abstract class Command {
 
     protected Command() {
         loadProps();
-        args = new ArrayList<>();
     }
 
     private void loadProps() {
@@ -44,6 +43,9 @@ public abstract class Command {
     }
 
     public void addArg(Command cmd){
+        if(args == null){
+            args = new ArrayList<>();
+        }
         System.out.println("Arg added");
         args.add(cmd);
     }
