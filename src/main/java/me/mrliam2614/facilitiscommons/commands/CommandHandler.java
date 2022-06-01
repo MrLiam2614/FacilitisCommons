@@ -60,7 +60,10 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
 
             System.arraycopy(args, 1, arguments, 0, args.length - 1);
 
-            Command nextArg = cmd.getArgs().stream().filter(arg -> arg.getName().equalsIgnoreCase(arguments[0])).findAny().orElse(null);
+            Command nextArg = null;
+            if(arguments.length >0) {
+                nextArg = cmd.getArgs().stream().filter(arg -> arg.getName().equalsIgnoreCase(arguments[0])).findAny().orElse(null);
+            }
 
             if (nextArg != null) {
                 calcCommand(player, nextArg, arguments);
