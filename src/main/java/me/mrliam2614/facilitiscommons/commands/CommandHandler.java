@@ -81,10 +81,20 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
         String commandName = args[0];
         Command cmd = commandList.stream().filter(c -> c.getName().equalsIgnoreCase(commandName)).findAny().orElse(null);
 
+        if (args.length < 2) {
+            if (cmd.getArgs() != null) {
+                player.sendMessage(cmd.getArgs().toString());
+                for (Command arg : cmd.getArgs()) {
+                    nextArgs.add(arg.getName());
+                }
+            }
+            return nextArgs;
+        }
+
         String[] arguments = new String[args.length - 1];
         System.arraycopy(args, 1, arguments, 0, args.length - 1);
 
-        String lastArgS = arguments[arguments.length-1];
+        String lastArgS = arguments[arguments.length - 1];
 
         Command lastArg = cmd.getArgs().stream().filter(arg -> arg.getName().equalsIgnoreCase(lastArgS)).findAny().orElse(null);
 
@@ -92,8 +102,11 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
             if (lastArg.getPermission() != null && !player.hasPermission(lastArg.getPermission())) {
                 return nextArgs;
             }
-            for (Command arg : lastArg.getArgs()) {
-                nextArgs.add(arg.getName());
+            if (lastArg.getArgs() != null) {
+                player.sendMessage(lastArg.getArgs().toString());
+                for (Command arg : lastArg.getArgs()) {
+                    nextArgs.add(arg.getName());
+                }
             }
         }
         return nextArgs;
