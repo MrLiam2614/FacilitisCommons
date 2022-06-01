@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CommandHandler implements CommandExecutor, TabCompleter {
 
@@ -81,12 +82,10 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
         String commandName = args[0];
         Command cmd = commandList.stream().filter(c -> c.getName().equalsIgnoreCase(commandName)).findAny().orElse(null);
 
-        if (args.length < 2) {
-            if (cmd.getArgs() != null) {
-                player.sendMessage(cmd.getArgs().toString());
-                for (Command arg : cmd.getArgs()) {
-                    nextArgs.add(arg.getName());
-                }
+        if (args.length == 1) {
+            List<Command> allCommands = commandList.stream().filter(c -> c.getName().contains(commandName)).collect(Collectors.toList());
+            for(Command cmda : allCommands){
+                nextArgs.add(cmda.getName());
             }
             return nextArgs;
         }
