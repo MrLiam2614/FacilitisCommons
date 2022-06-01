@@ -89,29 +89,28 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
             }
             return nextArgs;
         }
-
-        String[] arguments = new String[args.length - 1];
-        System.arraycopy(args, 1, arguments, 0, args.length - 1);
-
         if (cmd == null) {
             return nextArgs;
         }
+
         Command lastArg = cmd, prevArg = cmd;
-        for(int x = 0; x< arguments.length; x++){
+        for (int x = 0; x < args.length; x++) {
             int finalX = x;
             prevArg = lastArg;
-            lastArg = lastArg.getArgs().stream().filter(arg -> arg.getName().equalsIgnoreCase((arguments[finalX]))).findAny().orElse(null);
+            lastArg = lastArg.getArgs().stream().filter(arg -> arg.getName().equalsIgnoreCase((args[finalX]))).findAny().orElse(null);
         }
 
-        if (lastArg != null) {
-            if (lastArg.getPermission() != null && !player.hasPermission(lastArg.getPermission())) {
-                return nextArgs;
-            }
-            if (lastArg.getArgs() != null) {
-                player.sendMessage(lastArg.getArgs().toString());
-                for (Command arg : lastArg.getArgs()) {
-                    nextArgs.add(arg.getName());
-                }
+        if (lastArg == null) {
+            return nextArgs;
+        }
+
+        if (lastArg.getPermission() != null && !player.hasPermission(lastArg.getPermission())) {
+            return nextArgs;
+        }
+        if (lastArg.getArgs() != null) {
+            player.sendMessage(lastArg.getArgs().toString());
+            for (Command arg : lastArg.getArgs()) {
+                nextArgs.add(arg.getName());
             }
         }
         return nextArgs;
