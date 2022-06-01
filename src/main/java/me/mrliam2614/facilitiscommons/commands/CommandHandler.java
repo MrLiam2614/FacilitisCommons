@@ -7,7 +7,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,16 +79,23 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
             return nextArgs;
         }
 
-        String commandName = args[args.length - 1];
-
+        String commandName = args[0];
         Command cmd = commandList.stream().filter(c -> c.getName().equalsIgnoreCase(commandName)).findAny().orElse(null);
 
-        if (cmd != null) {
-            if (cmd.getPermission() != null && !player.hasPermission(cmd.getPermission())) {
-                //TODO: Handle no permissions
+        String[] arguments = new String[args.length - 1];
+        System.arraycopy(args, 1, arguments, 0, args.length - 1);
+
+        Command lastArg = cmd;
+        for (String arg : arguments) {
+            if (lastArg.getArgByName(arg) != null)
+                lastArg = lastArg.getArgByName(arg);
+        }
+
+        if (lastArg != null) {
+            if (lastArg.getPermission() != null && !player.hasPermission(lastArg.getPermission())) {
                 return nextArgs;
             }
-            for (Command arg : cmd.getArgs()) {
+            for (Command arg : lastArg.getArgs()) {
                 nextArgs.add(arg.getName());
             }
         }

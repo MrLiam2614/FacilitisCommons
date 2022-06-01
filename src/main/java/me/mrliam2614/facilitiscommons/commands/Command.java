@@ -46,8 +46,15 @@ public abstract class Command {
         if(args == null){
             args = new ArrayList<>();
         }
-        System.out.println("Arg added");
         args.add(cmd);
+    }
+
+    public Command getArgByName(String argName){
+        for(Command arg : getArgs()){
+            if(arg.getName().equalsIgnoreCase(argName))
+                return arg;
+        }
+        return null;
     }
 
     public List<Command> getArgs(){
