@@ -54,14 +54,13 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
 
             System.arraycopy(args, 1, arguments, 0, args.length - 1);
 
-            for (Command arg : cmd.getArgs()) {
-                player.sendMessage("Found: " + arg.getName());
-                if (arg.getName().equalsIgnoreCase(commandName)) {
-                    arg.execute(player, arguments);
-                    return true;
-                }
+            Command nextArg = cmd.getArgs().stream().filter(arg -> arg.getName().equalsIgnoreCase(arguments[0])).findAny().orElse(null);
+
+            if (nextArg != null) {
+                nextArg.execute(player, arguments);
+            } else {
+                cmd.execute(player, arguments);
             }
-            cmd.execute(player, arguments);
         }
         return true;
     }
@@ -85,11 +84,7 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
         String[] arguments = new String[args.length - 1];
         System.arraycopy(args, 1, arguments, 0, args.length - 1);
 
-        Command lastArg = cmd;
-        for (String arg : arguments) {
-            if (lastArg.getArgByName(arg) != null)
-                lastArg = lastArg.getArgByName(arg);
-        }
+        Command lastArg = cmd.getArgs().stream().filter(arg -> arg.getName().equalsIgnoreCase(arguments[arguments.length-2])).findAny().orElse(null);
 
         if (lastArg != null) {
             if (lastArg.getPermission() != null && !player.hasPermission(lastArg.getPermission())) {
