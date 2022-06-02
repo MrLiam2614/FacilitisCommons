@@ -97,7 +97,6 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
                 for(Command arg : cmd.getArgs()){
                     argList.add(arg.getName());
                 }
-                cmd.execute(player, arguments);
             }
         }
         return argList;
