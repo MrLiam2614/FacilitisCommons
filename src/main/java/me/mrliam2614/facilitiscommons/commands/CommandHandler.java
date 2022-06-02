@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 public class CommandHandler implements CommandExecutor, TabCompleter {
@@ -72,6 +73,35 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
             }
         }
     }
+    public List<String> calcArgs(Player player, Command cmd, String[] args, List<String> argList){
+        if(argList == null){
+            argList = new ArrayList<>();
+        }
+        if (cmd != null) {
+            if (cmd.getPermission() != null && !player.hasPermission(cmd.getPermission())) {
+                //TODO: Handle no permissions
+                return argList;
+            }
+            String[] arguments = new String[args.length - 1];
+
+            System.arraycopy(args, 1, arguments, 0, args.length - 1);
+
+            Command nextArg = null;
+            if(arguments.length >0) {
+                nextArg = cmd.getArgs().stream().filter(arg -> arg.getName().equalsIgnoreCase(arguments[0])).findAny().orElse(null);
+            }
+
+            if (nextArg != null) {
+                calcArgs(player, nextArg, arguments, argList);
+            } else {
+                for(Command arg : cmd.getArgs()){
+                    argList.add(arg.getName());
+                }
+                cmd.execute(player, arguments);
+            }
+        }
+        return argList;
+    }
 
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, @NotNull org.bukkit.command.Command command, @NotNull String label, @NotNull String[] args) {
@@ -99,30 +129,13 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
         if (cmd == null) {
             return nextArgs;
         }
+        List<String> getArgs = calcArgs(player, cmd, args, new ArrayList<>());
 
-        Command lastArg = cmd, prevArg = cmd;
-        for (int x = 0; x < args.length-1; x++) {
-            int finalX = x;
-            prevArg = lastArg;
-            if(lastArg == null || lastArg.getArgs() == null){
-                return nextArgs;
-            }
-            lastArg = lastArg.getArgs().stream().filter(arg -> arg.getName().equalsIgnoreCase((args[finalX]))).findAny().orElse(null);
+        for(String gotArg : getArgs){
+            if(gotArg.toLowerCase().startsWith(args[args.length-1].toLowerCase()))
+                nextArgs.add(gotArg);
         }
 
-        if (lastArg == null) {
-            return nextArgs;
-        }
-
-        if (lastArg.getPermission() != null && !player.hasPermission(lastArg.getPermission())) {
-            return nextArgs;
-        }
-        if (lastArg.getArgs() != null) {
-            player.sendMessage(lastArg.getArgs().toString());
-            for (Command arg : lastArg.getArgs()) {
-                nextArgs.add(arg.getName());
-            }
-        }
         return nextArgs;
     }
 
