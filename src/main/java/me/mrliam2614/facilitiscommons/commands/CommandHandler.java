@@ -137,12 +137,4 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
 
         return nextArgs;
     }
-
-    public boolean validateArg(String argName, Command cmd) {
-        Command rem = cmd.getArgs().stream().filter(c -> c.getName().equalsIgnoreCase(argName)).findAny().orElse(null);
-        if (rem == null) {
-            return false;
-        }
-        return true;
-    }
 }
