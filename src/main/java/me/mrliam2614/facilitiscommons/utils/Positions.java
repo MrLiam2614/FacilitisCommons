@@ -48,8 +48,8 @@ public class Positions {
         this.y = (Double) cs.get("coordinates.y", 0.0);
         this.z = (Double) cs.get("coordinates.z", 0.0);
         this.worldID = UUID.fromString((String) cs.get("world", Bukkit.getWorld(FacilitisCommons.getFacilitisCommons().getJavaPlugin().getServer().getWorlds().get(0).getUID().toString())));
-        this.pitch = (float) cs.get("view.pitch", 0.0);
-        this.yaw = (float) cs.get("view.yaw", 0.0);
+        this.pitch = (float) cs.get("view.pitch", 0f);
+        this.yaw = (float) cs.get("view.yaw", 0f);
     }
 
     public void save(ConfigurationSection cs){
