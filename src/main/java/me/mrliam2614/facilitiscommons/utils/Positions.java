@@ -56,7 +56,7 @@ public class Positions {
         cs.set("coordinates.x", this.x);
         cs.set("coordinates.y", this.y);
         cs.set("coordinates.z", this.z);
-        cs.set("world", this.worldID);
+        cs.set("world", this.worldID.toString());
         cs.set("view.pitch", this.pitch);
         cs.set("view.yaw", this.yaw);
     }

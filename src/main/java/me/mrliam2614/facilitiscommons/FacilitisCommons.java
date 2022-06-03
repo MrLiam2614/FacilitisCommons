@@ -13,26 +13,8 @@ public final class FacilitisCommons {
     @Getter
     private final JavaPlugin javaPlugin;
 
-    private Data messages;
-    private Data fullData;
-
     public FacilitisCommons(JavaPlugin javaPlugin) {
         facilitisCommons = this;
         this.javaPlugin = javaPlugin;
-
-        fullData = new Data();
-        messages = new Data();
-
-        List<String> test = new ArrayList<>();
-
-        messages.set("list", test);
-        messages.set("version", 1);
-        messages.set("lang", "it");
-
-        fullData.set("messages", messages);
-    }
-
-    public void enable() {
-
     }
 }
