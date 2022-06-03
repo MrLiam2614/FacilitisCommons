@@ -6,7 +6,9 @@ import me.mrliam2614.facilitiscommons.FacilitisCommons;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.configuration.ConfigurationSection;
 
+import javax.swing.text.Position;
 import java.util.UUID;
 
 @Getter
@@ -39,6 +41,24 @@ public class Positions {
         this.z = z;
         this.pitch = pitch;
         this.yaw = yaw;
+    }
+
+    public Positions(ConfigurationSection cs){
+        this.x = (Double) cs.get("coordinates.x", 0.0);
+        this.y = (Double) cs.get("coordinates.y", 0.0);
+        this.z = (Double) cs.get("coordinates.z", 0.0);
+        this.worldID = (UUID) cs.get("world", Bukkit.getWorld(FacilitisCommons.getFacilitisCommons().getJavaPlugin().getServer().getWorlds().get(0).getUID()));
+        this.pitch = (float) cs.get("view.pitch", 0.0);
+        this.yaw = (float) cs.get("view.yaw", 0.0);
+    }
+
+    public void save(ConfigurationSection cs){
+        cs.set("coordinates.x", this.x);
+        cs.set("coordinates.y", this.y);
+        cs.set("coordinates.z", this.z);
+        cs.set("world", this.worldID);
+        cs.set("view.pitch", this.pitch);
+        cs.set("view.yaw", this.yaw);
     }
 
     public boolean isWorldLoaded() {
