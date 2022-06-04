@@ -52,6 +52,15 @@ public class Positions {
         this.yaw = ((Double) cs.get("view.yaw", 0f)).floatValue();
     }
 
+    public Positions(ConfigurationSection cs, boolean onlyCoords){
+        if(!onlyCoords){
+            return;
+        }
+        this.x = (Double) cs.get("coordinates.x", 0.0);
+        this.y = (Double) cs.get("coordinates.y", 0.0);
+        this.z = (Double) cs.get("coordinates.z", 0.0);
+    }
+
     public void save(ConfigurationSection cs){
         cs.set("coordinates.x", this.x);
         cs.set("coordinates.y", this.y);
