@@ -11,8 +11,8 @@ import java.io.File;
 public class Config {
     private final String source;
     private final String end;
-    private File file;
     private final JavaPlugin plugin;
+    private File file;
     @Getter
     private FileConfiguration fileConfig;
 

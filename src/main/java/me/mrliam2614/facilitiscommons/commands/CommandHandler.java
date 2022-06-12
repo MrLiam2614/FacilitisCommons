@@ -10,7 +10,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.stream.Collectors;
 
 public class CommandHandler implements CommandExecutor, TabCompleter {
@@ -51,7 +50,7 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
         return true;
     }
 
-    public void calcCommand(Player player, Command cmd, String[] args){
+    public void calcCommand(Player player, Command cmd, String[] args) {
         if (cmd != null) {
             if (cmd.getPermission() != null && !player.hasPermission(cmd.getPermission())) {
                 //TODO: Handle no permissions
@@ -62,7 +61,7 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
             System.arraycopy(args, 1, arguments, 0, args.length - 1);
 
             Command nextArg = null;
-            if(arguments.length >0) {
+            if (arguments.length > 0) {
                 nextArg = cmd.getArgs().stream().filter(arg -> arg.getName().equalsIgnoreCase(arguments[0])).findAny().orElse(null);
             }
 
@@ -73,8 +72,9 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
             }
         }
     }
-    public List<String> calcArgs(Player player, Command cmd, String[] args, List<String> argList){
-        if(argList == null){
+
+    public List<String> calcArgs(Player player, Command cmd, String[] args, List<String> argList) {
+        if (argList == null) {
             argList = new ArrayList<>();
         }
         if (cmd != null) {
@@ -87,14 +87,14 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
             System.arraycopy(args, 1, arguments, 0, args.length - 1);
 
             Command nextArg = null;
-            if(arguments.length >0) {
+            if (arguments.length > 0) {
                 nextArg = cmd.getArgs().stream().filter(arg -> arg.getName().equalsIgnoreCase(arguments[0])).findAny().orElse(null);
             }
 
             if (nextArg != null) {
                 calcArgs(player, nextArg, arguments, argList);
             } else {
-                for(Command arg : cmd.getArgs()){
+                for (Command arg : cmd.getArgs()) {
                     argList.add(arg.getName());
                 }
             }
@@ -130,8 +130,8 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
         }
         List<String> getArgs = calcArgs(player, cmd, args, new ArrayList<>());
 
-        for(String gotArg : getArgs){
-            if(gotArg.toLowerCase().startsWith(args[args.length-1].toLowerCase()))
+        for (String gotArg : getArgs) {
+            if (gotArg.toLowerCase().startsWith(args[args.length - 1].toLowerCase()))
                 nextArgs.add(gotArg);
         }
 

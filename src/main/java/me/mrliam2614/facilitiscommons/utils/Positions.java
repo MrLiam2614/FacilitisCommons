@@ -8,7 +8,6 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 
-import javax.swing.text.Position;
 import java.util.UUID;
 
 @Getter
@@ -21,7 +20,7 @@ public class Positions {
     private float pitch;
     private float yaw;
 
-    public Positions(Location loc){
+    public Positions(Location loc) {
         this.worldID = loc.getWorld().getUID();
         this.x = loc.getX();
         this.y = loc.getY();
@@ -43,7 +42,7 @@ public class Positions {
         this.yaw = yaw;
     }
 
-    public Positions(ConfigurationSection cs){
+    public Positions(ConfigurationSection cs) {
         this.x = (Double) cs.get("coordinates.x", 0.0);
         this.y = (Double) cs.get("coordinates.y", 0.0);
         this.z = (Double) cs.get("coordinates.z", 0.0);
@@ -52,8 +51,8 @@ public class Positions {
         this.yaw = ((Double) cs.get("view.yaw", 0f)).floatValue();
     }
 
-    public Positions(ConfigurationSection cs, boolean onlyCoords){
-        if(!onlyCoords){
+    public Positions(ConfigurationSection cs, boolean onlyCoords) {
+        if (!onlyCoords) {
             return;
         }
         this.x = (Double) cs.get("coordinates.x", 0.0);
@@ -61,7 +60,7 @@ public class Positions {
         this.z = (Double) cs.get("coordinates.z", 0.0);
     }
 
-    public void save(ConfigurationSection cs){
+    public void save(ConfigurationSection cs) {
         cs.set("coordinates.x", this.x);
         cs.set("coordinates.y", this.y);
         cs.set("coordinates.z", this.z);
@@ -90,7 +89,7 @@ public class Positions {
         worldID = world.getUID();
     }
 
-    public Location getLocation(){
+    public Location getLocation() {
         return new Location(Bukkit.getWorld(worldID), x, y, z, pitch, yaw);
     }
 }

@@ -2,6 +2,7 @@
 
 To include our libraries to your plugin you need to add this to your pom.xml:
 <br><br>
+
 ````
 <repository>
     <id>jitpack.io</id>
@@ -15,7 +16,9 @@ To include our libraries to your plugin you need to add this to your pom.xml:
     <version>1.0.0</version>
 </dependency>
 ````
+
 You can shade our plugin into yours using this:
+
 ````
 <plugin>
     <groupId>org.apache.maven.plugins</groupId>
@@ -46,4 +49,5 @@ You can shade our plugin into yours using this:
 <div id="description">
 
 ## Description
+
 </div>

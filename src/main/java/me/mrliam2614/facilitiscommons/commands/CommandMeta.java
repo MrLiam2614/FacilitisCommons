@@ -10,6 +10,8 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface CommandMeta {
     String name();
+
     String description();
+
     String permission() default "";
 }

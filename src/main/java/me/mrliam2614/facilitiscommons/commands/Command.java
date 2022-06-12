@@ -42,23 +42,23 @@ public abstract class Command {
         return permission;
     }
 
-    public void addArg(Command cmd){
-        if(args == null){
+    public void addArg(Command cmd) {
+        if (args == null) {
             args = new ArrayList<>();
         }
         args.add(cmd);
     }
 
-    public Command getArgByName(String argName){
-        for(Command arg : getArgs()){
-            if(arg.getName().equalsIgnoreCase(argName))
+    public Command getArgByName(String argName) {
+        for (Command arg : getArgs()) {
+            if (arg.getName().equalsIgnoreCase(argName))
                 return arg;
         }
         return null;
     }
 
-    public List<Command> getArgs(){
-        if(args == null)
+    public List<Command> getArgs() {
+        if (args == null)
             args = new ArrayList<>();
         return args;
     }
