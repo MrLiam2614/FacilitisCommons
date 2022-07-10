@@ -2,12 +2,15 @@ package me.mrliam2614.facilitiscommons.commands;
 
 import lombok.Getter;
 import net.md_5.bungee.api.ChatColor;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandMap;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,6 +26,18 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
 
     public void registerCommand(Command command) {
         this.commandList.add(command);
+        for(String alias : command.getAliases()) {
+            try {
+                final Field bukkitCommandMap = Bukkit.getServer().getClass().getDeclaredField("commandMap");
+
+                bukkitCommandMap.setAccessible(true);
+                CommandMap commandMap = (CommandMap) bukkitCommandMap.get(Bukkit.getServer());
+
+                commandMap.register("seen", new BukkitCommand(alias, command));
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     public void addArg(Command parentCommand, Command arg) {

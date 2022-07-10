@@ -9,6 +9,7 @@ public abstract class Command {
     private String name;
     private String description;
     private String permission;
+    private String[] aliases;
     private List<Command> args;
 
     protected Command() {
@@ -25,6 +26,7 @@ public abstract class Command {
         this.name = commandMeta.name();
         this.description = commandMeta.description();
         this.permission = commandMeta.permission().isBlank() ? null : commandMeta.permission();
+        this.aliases = commandMeta.aliases();
     }
 
 
@@ -61,5 +63,9 @@ public abstract class Command {
         if (args == null)
             args = new ArrayList<>();
         return args;
+    }
+
+    public String[] getAliases() {
+        return aliases;
     }
 }
