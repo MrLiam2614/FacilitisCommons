@@ -90,6 +90,6 @@ public class Positions {
     }
 
     public Location getLocation() {
-        return new Location(Bukkit.getWorld(worldID), x, y, z, pitch, yaw);
+        return new Location(Bukkit.getWorld(worldID), x, y, z, yaw, pitch);
     }
 }
