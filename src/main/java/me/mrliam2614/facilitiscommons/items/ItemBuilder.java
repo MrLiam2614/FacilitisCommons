@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class ItemBuilder {
-    public ItemStack createItem(String itemName, ItemStack itemStack, String... lore) {
+    public static ItemStack createItem(String itemName, ItemStack itemStack, String... lore) {
         List<String> loreList = new ArrayList<>();
         for (String loreLine : lore) {
             loreList.add(ChatColor.translateAlternateColorCodes('&', loreLine));
@@ -33,7 +33,7 @@ public class ItemBuilder {
         return itemStack;
     }
 
-    public ItemStack createHead(String itemName, String base64, String... lore) {
+    public static ItemStack createHead(String itemName, String base64, String... lore) {
         List<String> loreList = new ArrayList<>();
         for (String loreLine : lore) {
             loreList.add(ChatColor.translateAlternateColorCodes('&', loreLine));
@@ -65,7 +65,7 @@ public class ItemBuilder {
         return itemStack;
     }
 
-    public ItemStack createHead(String itemName, OfflinePlayer offlinePlayer, String... lore) {
+    public static ItemStack createHead(String itemName, OfflinePlayer offlinePlayer, String... lore) {
         List<String> loreList = new ArrayList<>();
         for (String loreLine : lore) {
             loreList.add(ChatColor.translateAlternateColorCodes('&', loreLine));

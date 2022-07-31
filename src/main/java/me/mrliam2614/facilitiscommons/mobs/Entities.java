@@ -1,10 +1,10 @@
 package me.mrliam2614.facilitiscommons.mobs;
 
 import lombok.Getter;
-import me.mrliam2614.facilitiscommons.mobs.ally.NormalAllay;
 import me.mrliam2614.facilitiscommons.mobs.ally.AllayDiamondSword;
 import me.mrliam2614.facilitiscommons.mobs.ally.AllayLantern;
 import me.mrliam2614.facilitiscommons.mobs.ally.AllayStonePickaxe;
+import me.mrliam2614.facilitiscommons.mobs.ally.NormalAllay;
 import me.mrliam2614.facilitiscommons.mobs.zombie.BabyZombie;
 import me.mrliam2614.facilitiscommons.mobs.zombie.NormalZombie;
 import me.mrliam2614.facilitiscommons.mobs.zombie.villagers.baby.*;

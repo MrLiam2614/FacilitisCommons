@@ -26,7 +26,7 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
 
     public void registerCommand(Command command) {
         this.commandList.add(command);
-        for(String alias : command.getAliases()) {
+        for (String alias : command.getAliases()) {
             try {
                 final Field bukkitCommandMap = Bukkit.getServer().getClass().getDeclaredField("commandMap");
 
@@ -34,7 +34,7 @@ public class CommandHandler implements CommandExecutor, TabCompleter {
                 CommandMap commandMap = (CommandMap) bukkitCommandMap.get(Bukkit.getServer());
 
                 commandMap.register("seen", new BukkitCommand(alias, command));
-            } catch(Exception e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }
